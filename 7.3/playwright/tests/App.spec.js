@@ -1,12 +1,9 @@
 const { test, expect } = require("@playwright/test");
 const { email, password } = require("../user");
 
-test("HappyPath", async () => {
-  const browser = await chromium.launch({
-    headless: false,
-    slowMo: 500,
-  });
+test("HappyPath", async ({ page }) => {
   await page.goto("https://netology.ru/?modal=sign_in");
+
   await page.fill('[placeholder="Email"]', email);
   await page.fill('[placeholder="Пароль"]', password);
   await page.click('[data-testid="login-submit-btn"]');
@@ -14,12 +11,9 @@ test("HappyPath", async () => {
   await page.screenshot({ path: "happyPath.png", fullPage: true });
 }, 60000);
 
-test("FailedTest", async () => {
-  const browser = await chromium.launch({
-    headless: false,
-    slowMo: 500,
-  });
+test("FailedTest", async ({ page }) => {
   await page.goto("https://netology.ru/?modal=sign_in");
+
   await page.fill('[placeholder="Email"]', "Email@email.com");
   await page.fill('[placeholder="Пароль"]', "Password");
   await page.click('[data-testid="login-submit-btn"]');
